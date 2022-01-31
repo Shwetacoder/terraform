@@ -1,6 +1,6 @@
 provider "aws" {
-  access_key = ""
-  secret_key = ""
+  access_key = "AKIA2LFCMUAVX45XU2L6"
+  secret_key = "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"
   region     = "us-east-1"
 }
 
@@ -11,10 +11,6 @@ resource "aws_vpc" "terraform-vpc" {
   tags = {
     Name = "terraform-demo-vpc"
   }
-}
-
-output "aws_vpc_id" {
-  value = aws_vpc.terraform-vpc.id
 }
 
 ## Security Group##
@@ -56,10 +52,6 @@ resource "aws_security_group" "terraform_private_sg" {
   }
 }
 
-output "aws_security_gr_id" {
-  value = aws_security_group.terraform_private_sg.id
-}
-
 ## Create Subnets ##
 resource "aws_subnet" "terraform-subnet_1" {
   vpc_id            = aws_vpc.terraform-vpc.id
@@ -71,10 +63,6 @@ resource "aws_subnet" "terraform-subnet_1" {
   }
 }
 
-output "aws_subnet_subnet_1" {
-  value = aws_subnet.terraform-subnet_1.id
-}
-
 resource "aws_instance" "terraform_wapp" {
   ami                         = "ami-0ed9277fb7eb570c9"
   instance_type               = "t2.micro"
@@ -83,10 +71,7 @@ resource "aws_instance" "terraform_wapp" {
   count                       = 1
   associate_public_ip_address = true
   tags = {
-    Name        = "terraform_ec2_wapp_awsdev"
-    Environment = "development"
-    Project     = "DEMO-TERRAFORM"
+     "Schedule" : "Bangalore-office-hours"
   }
 }
 
-output "instance_id_list" { value = ["${aws_instance.terraform_wapp.*.id}"] }
